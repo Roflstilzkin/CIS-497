@@ -27,7 +27,7 @@ int main() {
     double hold, hold2, hold3;
     //evaluate which is the largest
   
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < 100; i++)
     {
         int largest = evaluate(greenav, blueav, redav);
 
@@ -35,21 +35,21 @@ int main() {
 
         switch (largest) {
         case 1:
-            cout  << " current array pick: " << green[r10] << setw(15);
+            cout  << " current green array pick: " << green[r10] << setw(15);
             hold = calculate(green[r10], countergreen, greenav);
             greenav = hold;
             countergreen = countergreen + 1;
             cout << greenav << " Green Average " << endl;
             break;
         case 2:
-            cout << " current array pick: " << blue[r10] << setw(15);
+            cout << " current blue array pick: " << blue[r10] << setw(15);
             hold2 = calculate(blue[r10], counterblue, blueav);
             blueav = hold2;
             counterblue = counterblue + 1;
             cout << blueav << " Blue Average " << endl;
             break;
         case 3:
-            cout  << " current array pick: " << red[r10] << setw(15);
+            cout  << " current red array pick: " << red[r10] << setw(15);
             hold3 = calculate(red[r10], counterred, redav);
             redav = hold3;
             counterred = counterred + 1;
@@ -58,6 +58,10 @@ int main() {
         }
 
     }
+    cout << endl;
+    cout << "GREEN AVERAGE: " << greenav << endl;
+    cout << "BLUE AVERAGE: " << blueav << endl;
+    cout << "RED AVERAGE: " << redav << endl;
     return 0;
 }
 
@@ -78,21 +82,43 @@ int start() {
 
 
 int evaluate(double aa, double bb, double cc) {
-    if ((aa == bb) && (bb == cc)) {//case where all are equal
-        int x = rand() % 3;
-        return x+1;
+    int chance = rand() % 100 + 1;
+
+    if (chance > 10) {
+        if ((aa == bb) && (bb == cc)) {//case where all are equal
+            int x = rand() % 3 + 1;
+            return x;
+        }
+        else if ((aa == bb) && (aa && bb > cc)) {//case where green is same as blue but greater than red
+            int y = rand() % 2 + 1;
+            return y;
+        }
+        else if (aa > bb && aa > cc) {//aa is largest
+            return 1;
+        }
+        else if (bb > aa && bb > cc) {//bb is largest
+            return 2;
+        }
+        else if (cc > aa && cc > bb) {//cc is largest
+            return 3;
+        }
     }
-    else if ((aa == bb) && (aa && bb > cc)) {//case where green is same as blue but greater than red
+    else
+    {
+        cout << "\nWE OUT HERE EXPLORING FOLKS! \n" << endl;
         int y = rand() % 2;
-        return y + 1;
-    }
-    else if (aa > bb && aa > cc) {//aa is largest
-        return 1;
-    }
-    else if (bb > aa && bb > cc) {//bb is largest
-        return 2;
-    }
-    else if (cc > aa && cc > bb) {//cc is largest
-        return 3;
+        int largest = evaluate(aa, bb, cc);
+        if (largest == 1) {
+            int notgreen[2] = { 2,3 };
+            return notgreen[y];
+        }
+        else if (largest == 2) {
+            int notblue[2] = { 1,3 };
+            return notblue[y];
+        }
+        else if (largest == 3) {
+            int notred[2] = { 1,2 };
+            return notred[y];
+        }
     }
 }
