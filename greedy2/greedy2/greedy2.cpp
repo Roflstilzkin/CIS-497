@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -26,38 +27,49 @@ int main() {
     double counterred = 1;
     double hold, hold2, hold3;
     //evaluate which is the largest
-  
-    for (int i = 0; i < 100; i++)
+
+    ofstream file1 ("../data.txt");
+    if (file1.is_open())
+        file1 << "array value drawn:" << setw(15) << "array average" << endl;
     {
-        int largest = evaluate(greenav, blueav, redav);
 
-        int r10 = rand() % 10; //picks a random number 0-9 length of the array
-
-        switch (largest) {
-        case 1:
-            cout  << " current green array pick: " << green[r10] << setw(15);
-            hold = calculate(green[r10], countergreen, greenav);
-            greenav = hold;
-            countergreen = countergreen + 1;
-            cout << greenav << " Green Average " << endl;
-            break;
-        case 2:
-            cout << " current blue array pick: " << blue[r10] << setw(15);
-            hold2 = calculate(blue[r10], counterblue, blueav);
-            blueav = hold2;
-            counterblue = counterblue + 1;
-            cout << blueav << " Blue Average " << endl;
-            break;
-        case 3:
-            cout  << " current red array pick: " << red[r10] << setw(15);
-            hold3 = calculate(red[r10], counterred, redav);
-            redav = hold3;
-            counterred = counterred + 1;
-            cout << redav << " Red Average " << endl;
-            break;
+        for (int i = 0; i < 100; i++)
+        {
+            int largest = evaluate(greenav, blueav, redav);
+            int r10 = rand() % 10; //picks a random number 0-9 length of the array
+            switch (largest) {
+            case 1:
+                cout << " current green array pick: " << green[r10] << setw(15);
+                file1 << green[r10] << setw(20);
+                hold = calculate(green[r10], countergreen, greenav);
+                greenav = hold;
+                countergreen = countergreen + 1;
+                cout << greenav << " Green Average " << endl;
+                file1 << greenav << "green" << endl;
+                break;
+            case 2:
+                cout << " current blue array pick: " << blue[r10] << setw(15);
+                hold2 = calculate(blue[r10], counterblue, blueav);
+                file1 << blue[r10] << setw(20);
+                blueav = hold2;
+                counterblue = counterblue + 1;
+                cout << blueav << " Blue Average " << endl;
+                file1 << blueav << "blue" << endl;
+                break;
+            case 3:
+                cout << " current red array pick: " << red[r10] << setw(15);
+                file1 << red[r10] << setw(20);
+                hold3 = calculate(red[r10], counterred, redav);
+                redav = hold3;
+                counterred = counterred + 1;
+                cout << redav << " Red Average " << endl;
+                file1 << redav << "red" << endl;
+                break;
+            }
         }
-
     }
+    file1.close();
+
     cout << endl;
     cout << "GREEN AVERAGE: " << greenav << endl;
     cout << "BLUE AVERAGE: " << blueav << endl;
@@ -84,7 +96,7 @@ int start() {
 int evaluate(double aa, double bb, double cc) {
     int chance = rand() % 100 + 1;
 
-    if (chance > 10) {
+    if (chance > 0) {
         if ((aa == bb) && (bb == cc)) {//case where all are equal
             int x = rand() % 3 + 1;
             return x;
@@ -105,7 +117,7 @@ int evaluate(double aa, double bb, double cc) {
     }
     else
     {
-        cout << "\nWE OUT HERE EXPLORING FOLKS! \n" << endl;
+        //cout << "\nWE OUT HERE EXPLORING FOLKS! \n" << endl;
         int y = rand() % 2;
         int largest = evaluate(aa, bb, cc);
         if (largest == 1) {
