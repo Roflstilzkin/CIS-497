@@ -71,7 +71,7 @@ int main() {
     int gs = greenv.size();
     int bs = bluev.size();
     int rs = redv.size();
-    /*
+
     ofstream greenf("../green.csv");
     for (int i1 = 0; i1 < gs; i1++) {
         greenf << "green" << "," << greenv.at(i1) << "," << endl;
@@ -90,9 +90,8 @@ int main() {
         redf << "red" << "," << redv.at(i3) << "," << endl;
     }
     redf.close();
-    */
+
     ofstream allf("../all.csv");
-    allf << "green," << "blue," << "red" << endl;
     for (int i = 0; i < 100; i++) {
         allf << greenv.at(i) << "," << bluev.at(i) << "," << redv.at(i) << endl;
     }
