@@ -2,13 +2,14 @@
 #include <ctime>
 #include <iomanip>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
 int start();
 int evaluate(double a, double b, double c);
 double calculate(double next, double counter, double average);
-
+const clock_t begin_time = clock();
 
 
 int main() {
@@ -39,21 +40,21 @@ int main() {
             int r10 = rand() % 10; //picks a random number 0-9 length of the array
             switch (largest) {
             case 1:
-                cout << " current green array pick: " << green[r10] << setw(15);
+                cout << " current green array pick: " << green[r10] << setw(15) << endl;
                 file1 << green[r10] << ",";
                 hold = calculate(green[r10], countergreen, greenav);
 
-                average = calulate(green[r10], icounter, average);
+                average = calculate(green[r10], icounter, average);
                 greenav = hold;
                 countergreen = countergreen + 1;
                 cout << greenav << " Green Average " << endl;
                 file1 << greenav << ",green" << endl;
                 break;
             case 2:
-                cout << " current blue array pick: " << blue[r10] << setw(15);
+                cout << " current blue array pick: " << blue[r10] << setw(15) << endl;
                 hold2 = calculate(blue[r10], counterblue, blueav);
 
-                average = calulate(blue[r10], icounter, average);
+                average = calculate(blue[r10], icounter, average);
                 file1 << blue[r10] << ",";
                 blueav = hold2;
                 counterblue = counterblue + 1;
@@ -61,11 +62,11 @@ int main() {
                 file1 << blueav << ",blue" << endl;
                 break;
             case 3:
-                cout << " current red array pick: " << red[r10] << setw(15);
+                cout << " current red array pick: " << red[r10] << setw(15) << endl;
                 file1 << red[r10] << ",";
 
                 hold3 = calculate(red[r10], counterred, redav);
-                average = calulate(red[r10], icounter, average);
+                average = calculate(red[r10], icounter, average);
                 redav = hold3;
                 counterred = counterred + 1;
                 cout << redav << " Red Average " << endl;
@@ -73,7 +74,7 @@ int main() {
                 break;
             }
             icounter++;
-            cout <<"value: " << average << "running average over all" << endl;
+            cout <<"value: " << average << "  running average over all" << endl;
         }
     }
     file1.close();
@@ -89,9 +90,13 @@ int main() {
 //this function finds the new average
 //x is new value to add, y is the average for array, i is the count
 double calculate(double next, double counter, double average) {
-    double alpha = 0.1;
-    double avg = average + alpha(next - average));
+    double alpha = 2;
+    //double avg = average + alpha*(next - average);
+    
     //double avg = average + ((1 / counter) * (next - average));
+    
+    double avg = average + alpha(sqrt(begin_time / counter));
+    
     return avg;
 }
 
@@ -143,4 +148,5 @@ int evaluate(double aa, double bb, double cc) {
             return notred[y];
         }
     }
+    return -1;
 }
