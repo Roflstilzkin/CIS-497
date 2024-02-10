@@ -9,7 +9,7 @@ using namespace std;
 int start();
 int evaluate(double a, double b, double c);
 double calculate(double next, double counter, double average);
-
+const clock_t begin_time = clock();
 
 int main() {
     //makes the random generator create new numbers each time the program is ran.
@@ -168,4 +168,5 @@ int evaluate(double aa, double bb, double cc) {
             return 3;
         }
     }
+    return -1;
 }
